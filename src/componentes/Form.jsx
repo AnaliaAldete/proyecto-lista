@@ -7,12 +7,25 @@ import {
 	FormControl,
 	InputLabel,
 } from "@mui/material";
+import { useState } from "react";
 
-export const Form = () => {
+export const Form = ({ agregarTarea }) => {
+	const [tarea, setTarea] = useState("");
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		agregarTarea(tarea);
+	};
 	return (
 		<Stack spacing={10} direction="row">
-			<form>
-				<TextField id="tarea" label="Agregar una tarea" variant="filled" />
+			<form onSubmit={handleSubmit}>
+				<TextField
+					id="tarea"
+					label="Agregar una tarea"
+					variant="filled"
+					value={tarea}
+					onChange={(e) => setTarea(e.target.value)} //ver lo del name
+				/>
 				<Button variant="contained" type="submit">
 					Agregar Tarea
 				</Button>
@@ -27,21 +40,6 @@ export const Form = () => {
 					<MenuItem value="todas">Todas</MenuItem>
 				</Select>
 			</FormControl>
-
-			{/* <FormControl>
-				<InputLabel htmlFor="input-tarea">Ingrese una tarea</InputLabel>
-				<Input id="input-tarea" aria-describedby="my-helper-text" />
-				<FormHelperText id="my-helper-text">
-					La tarea no debe superar los 60 caracteres
-				</FormHelperText>
-			</FormControl>
-			<FormControl>
-				<InputLabel htmlFor="input-tarea">Ingrese una tarea</InputLabel>
-				<Input id="input-tarea" aria-describedby="my-helper-text" />
-				<FormHelperText id="my-helper-text">
-					La tarea no debe superar los 60 caracteres
-				</FormHelperText>
-			</FormControl> */}
 		</Stack>
 	);
 };
