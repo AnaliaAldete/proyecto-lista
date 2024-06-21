@@ -21,6 +21,11 @@ function App() {
 		setArrayTareas([...arrayTareas, nuevaTarea]);
 	};
 
+	const eliminarTarea = (id) => {
+		const nuevasTareas = arrayTareas.filter((tarea) => tarea.id !== id);
+		setArrayTareas(nuevasTareas);
+	};
+
 	return (
 		<Stack
 			spacing={10}
@@ -43,6 +48,7 @@ function App() {
 						descripcion={tarea.descripcion}
 						id={tarea.id}
 						setArrayTareas={setArrayTareas}
+						eliminarTarea={eliminarTarea}
 					/>
 				))}
 			</Stack>
