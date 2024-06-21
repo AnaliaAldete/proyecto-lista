@@ -1,5 +1,3 @@
-//ver error al escribir!!!
-
 import {
 	Stack,
 	TextField,
@@ -11,7 +9,14 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-export const Form = ({ agregarTarea, descripcion, edit, setEdit }) => {
+export const Form = ({
+	agregarTarea,
+	descripcion,
+	edit,
+	setEdit,
+	id,
+	setArrayTareas,
+}) => {
 	const {
 		register,
 		handleSubmit,
@@ -19,11 +24,25 @@ export const Form = ({ agregarTarea, descripcion, edit, setEdit }) => {
 		reset,
 	} = useForm();
 
-	const onSubmit = (data) => {
+	const onSubmit = (data, e) => {
 		if (!edit) {
 			agregarTarea(data.descripcion);
 		} else {
 			setEdit(false);
+			const nuevoArrayTareas = JSON.parse(
+				localStorage.getItem("arrayTareas")
+			).map((tarea) => {
+				if (tarea.id === id) {
+					return {
+						...tarea,
+						descripcion: e.target.descripcion.value,
+					};
+				} else {
+					return tarea;
+				}
+			});
+			setArrayTareas(nuevoArrayTareas);
+			localStorage.setItem("arrayTareas", JSON.stringify(nuevoArrayTareas));
 		}
 		reset();
 	};

@@ -32,10 +32,18 @@ function App() {
 			}}
 		>
 			<Typography variant="h2">Todo list</Typography>
-			<Form agregarTarea={handleArrayTareas}></Form>
+			<Form
+				agregarTarea={handleArrayTareas}
+				setArrayTareas={setArrayTareas}
+			></Form>
 			<Stack spacing={2} sx={{ width: "100%", alignItems: "center" }}>
 				{arrayTareas.map((tarea) => (
-					<Tarea key={tarea.id} descripcion={tarea.descripcion} />
+					<Tarea
+						key={tarea.id}
+						descripcion={tarea.descripcion}
+						id={tarea.id}
+						setArrayTareas={setArrayTareas}
+					/>
 				))}
 			</Stack>
 		</Stack>

@@ -4,7 +4,7 @@ import { FaCheckCircle, FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { Form } from "./Form";
 
-export const Tarea = ({ descripcion }) => {
+export const Tarea = ({ descripcion, id, setArrayTareas }) => {
 	const [edit, setEdit] = useState(false);
 
 	const handleToggleEdit = () => setEdit(true);
@@ -12,7 +12,13 @@ export const Tarea = ({ descripcion }) => {
 	return (
 		<Stack spacing={2}>
 			{edit ? (
-				<Form descripcion={descripcion} edit={edit} setEdit={setEdit} />
+				<Form
+					descripcion={descripcion}
+					edit={edit}
+					setEdit={setEdit}
+					id={id}
+					setArrayTareas={setArrayTareas}
+				/>
 			) : (
 				<Stack direction="row">
 					<Typography variant="body1">{descripcion}</Typography>
