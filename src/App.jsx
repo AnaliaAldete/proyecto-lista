@@ -26,14 +26,18 @@ function App() {
 			spacing={10}
 			sx={{
 				backgroundColor: "pink",
-				height: "100vh",
+				minHeight: "100vh",
 				alignItems: "center",
 				paddingBlock: 3,
 			}}
 		>
 			<Typography variant="h2">Todo list</Typography>
 			<Form agregarTarea={handleArrayTareas}></Form>
-			<Tarea arrayTareas={arrayTareas}></Tarea>
+			<Stack spacing={2} sx={{ width: "100%", alignItems: "center" }}>
+				{arrayTareas.map((tarea) => (
+					<Tarea key={tarea.id} descripcion={tarea.descripcion} />
+				))}
+			</Stack>
 		</Stack>
 	);
 }
