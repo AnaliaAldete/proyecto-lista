@@ -14,23 +14,20 @@ import { FaCheckCircle, FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { Form } from "./Form";
 
-export const Tarea = ({ descripcion, id, setArrayTareas, eliminarTarea }) => {
+export const Tarea = ({
+	descripcion,
+	id,
+	setArrayTareas,
+	eliminarTarea,
+	check,
+	handleCheckTarea,
+}) => {
 	const [edit, setEdit] = useState(false);
 	const [open, setOpen] = useState(false);
 
-	const handleToggleEdit = () => setEdit(true);
-
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
-
-	const handleClose = () => {
-		setOpen(false);
-	};
-
 	const handleEliminarTarea = () => {
 		eliminarTarea(id);
-		handleClose();
+		setOpen(false);
 	};
 
 	return (
@@ -45,15 +42,23 @@ export const Tarea = ({ descripcion, id, setArrayTareas, eliminarTarea }) => {
 				/>
 			) : (
 				<Stack direction="row">
-					<Typography variant="body1">{descripcion}</Typography>
+					<Typography
+						variant="body1"
+						sx={{
+							backgroundColor: check ? "lightgreen" : "inherit",
+							textDecoration: check ? "line-through" : "none",
+						}}
+					>
+						{descripcion}
+					</Typography>
 					<ButtonGroup variant="text" aria-label="Basic button group">
-						<Button>
+						<Button onClick={() => handleCheckTarea(id)}>
 							<FaCheckCircle />
 						</Button>
-						<Button onClick={handleClickOpen}>
+						<Button onClick={() => setOpen(true)}>
 							<RiDeleteBin6Fill />
 						</Button>
-						<Button onClick={handleToggleEdit}>
+						<Button onClick={() => setEdit(true)}>
 							<FaEdit />
 						</Button>
 					</ButtonGroup>
@@ -61,7 +66,7 @@ export const Tarea = ({ descripcion, id, setArrayTareas, eliminarTarea }) => {
 			)}
 			<Dialog
 				open={open}
-				onClose={handleClose}
+				onClose={() => setOpen(false)}
 				aria-labelledby="alert-dialog-title"
 				aria-describedby="alert-dialog-description"
 			>
@@ -74,7 +79,7 @@ export const Tarea = ({ descripcion, id, setArrayTareas, eliminarTarea }) => {
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Button variant="outlined" onClick={handleClose}>
+					<Button variant="outlined" onClick={() => setOpen(false)}>
 						Cancelar
 					</Button>
 					<Button variant="contained" onClick={handleEliminarTarea} autoFocus>

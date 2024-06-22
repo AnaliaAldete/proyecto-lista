@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 function App() {
 	const [arrayTareas, setArrayTareas] = useState(
 		JSON.parse(localStorage.getItem("arrayTareas")) || [
-			{ id: uuidv4(), descripcion: "Tarea de ejemplo" },
+			{ id: uuidv4(), descripcion: "Tarea de ejemplo", check: false },
 		]
 	);
 
@@ -17,14 +17,23 @@ function App() {
 	}, [arrayTareas]);
 
 	const handleArrayTareas = (descripcionTarea) => {
-		const nuevaTarea = { id: uuidv4(), descripcion: descripcionTarea };
+		const nuevaTarea = {
+			id: uuidv4(),
+			descripcion: descripcionTarea,
+			check: false,
+		};
 		setArrayTareas([...arrayTareas, nuevaTarea]);
 	};
 
-	const eliminarTarea = (id) => {
-		const nuevasTareas = arrayTareas.filter((tarea) => tarea.id !== id);
+	const handleCheckTarea = (id) => {
+		const nuevasTareas = arrayTareas.map((tarea) =>
+			tarea.id === id ? { ...tarea, check: !tarea.check } : tarea
+		);
 		setArrayTareas(nuevasTareas);
 	};
+
+	const eliminarTarea = (id) =>
+		setArrayTareas(arrayTareas.filter((tarea) => tarea.id !== id));
 
 	return (
 		<Stack
@@ -48,6 +57,8 @@ function App() {
 						descripcion={tarea.descripcion}
 						id={tarea.id}
 						setArrayTareas={setArrayTareas}
+						check={tarea.check}
+						handleCheckTarea={handleCheckTarea}
 						eliminarTarea={eliminarTarea}
 					/>
 				))}
