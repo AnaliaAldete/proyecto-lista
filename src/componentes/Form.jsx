@@ -1,12 +1,4 @@
-import {
-	Stack,
-	TextField,
-	Button,
-	// Select,
-	// MenuItem,
-	// FormControl,
-	// InputLabel,
-} from "@mui/material";
+import { Stack, TextField, Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 export const Form = ({
@@ -47,7 +39,6 @@ export const Form = ({
 		reset();
 	};
 	return (
-		//<Stack spacing={10} direction="row">
 		<form
 			onSubmit={handleSubmit(onSubmit)}
 			style={{ display: "flex", gap: 15 }}
@@ -88,16 +79,5 @@ export const Form = ({
 				</Button>
 			</Stack>
 		</form>
-		// 	{/* <FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
-		// 		<InputLabel id="demo-simple-select-label">
-		// 			Seleccione un filtro
-		// 		</InputLabel>
-		// 		<Select label="Estado">
-		// 			<MenuItem>Pendiente</MenuItem>
-		// 			<MenuItem>Completada</MenuItem>
-		// 			<MenuItem>Todas</MenuItem>
-		// 		</Select>
-		// 	</FormControl> */}
-		// </Stack>
 	);
 };

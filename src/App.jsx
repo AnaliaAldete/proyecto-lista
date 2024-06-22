@@ -1,5 +1,12 @@
 import "./App.css";
-import { Stack, Typography } from "@mui/material";
+import {
+	Stack,
+	Typography,
+	Select,
+	MenuItem,
+	FormControl,
+	InputLabel,
+} from "@mui/material";
 import { Tarea } from "./componentes/Tarea";
 import { Form } from "./componentes/Form";
 import { useState, useEffect } from "react";
@@ -11,6 +18,7 @@ function App() {
 			{ id: uuidv4(), descripcion: "Tarea de ejemplo", check: false },
 		]
 	);
+	const [filtro, setFiltro] = useState("Todas");
 
 	useEffect(() => {
 		localStorage.setItem("arrayTareas", JSON.stringify(arrayTareas));
@@ -35,6 +43,17 @@ function App() {
 	const eliminarTarea = (id) =>
 		setArrayTareas(arrayTareas.filter((tarea) => tarea.id !== id));
 
+	const handleFiltro = (e) => {
+		setFiltro(e.target.value);
+	};
+
+	const tareasFiltradas = arrayTareas.filter((tarea) => {
+		if (filtro === "Todas") return true;
+		else if (filtro === "Pendiente") return !tarea.check;
+		else if (filtro === "Completa") return tarea.check;
+		else return true;
+	});
+
 	return (
 		<Stack
 			spacing={10}
@@ -50,8 +69,21 @@ function App() {
 				agregarTarea={handleArrayTareas}
 				setArrayTareas={setArrayTareas}
 			></Form>
+			<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
+				<InputLabel id="filtro-select-label">Seleccione un filtro</InputLabel>
+				<Select
+					labelId="filtro-select-label"
+					id="filtro-select"
+					value={filtro}
+					onChange={handleFiltro}
+				>
+					<MenuItem value="Pendiente">Pendiente</MenuItem>
+					<MenuItem value="Completa">Completa</MenuItem>
+					<MenuItem value="Todas">Todas</MenuItem>
+				</Select>
+			</FormControl>
 			<Stack spacing={2} sx={{ width: "100%", alignItems: "center" }}>
-				{arrayTareas.map((tarea) => (
+				{tareasFiltradas.map((tarea) => (
 					<Tarea
 						key={tarea.id}
 						descripcion={tarea.descripcion}
