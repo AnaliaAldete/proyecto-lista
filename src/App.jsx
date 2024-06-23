@@ -56,33 +56,87 @@ function App() {
 
 	return (
 		<Stack
-			spacing={10}
+			spacing={3}
+			alignItems={"center"}
+			p={3}
+			minHeight={"100vh"}
 			sx={{
-				backgroundColor: "pink",
-				minHeight: "100vh",
-				alignItems: "center",
-				paddingBlock: 3,
+				backgroundImage: "url(/img/fondo1.png)",
 			}}
 		>
-			<Typography variant="h2">Todo list</Typography>
-			<Form
-				agregarTarea={handleArrayTareas}
-				setArrayTareas={setArrayTareas}
-			></Form>
-			<FormControl variant="filled" sx={{ m: 1, minWidth: 200 }}>
-				<InputLabel id="filtro-select-label">Seleccione un filtro</InputLabel>
-				<Select
-					labelId="filtro-select-label"
-					id="filtro-select"
-					value={filtro}
-					onChange={handleFiltro}
+			<Typography
+				variant="h3"
+				component="h1"
+				bgcolor={"#14213d"}
+				color={"#f9cc83"}
+				p={2}
+				borderRadius={2}
+			>
+				Master Tarea
+			</Typography>
+			<Stack
+				direction={{ xs: "column", md: "row" }}
+				spacing={2}
+				bgcolor={"#f9cc83"}
+				border={"solid 2px #14213d"}
+				p={2}
+				borderRadius={2}
+				width={{ xs: "90%", sm: "60%" }}
+				justifyContent={"space-between"}
+			>
+				<Form
+					agregarTarea={handleArrayTareas}
+					setArrayTareas={setArrayTareas}
+				></Form>
+				<FormControl
+					variant="filled"
+					sx={{
+						minWidth: "30%",
+						"& .MuiFilledInput-root": {
+							backgroundColor: "#f0f0f0",
+							"&:hover": {
+								backgroundColor: "#f0f0f0",
+							},
+							"&.Mui-focused": {
+								backgroundColor: "#f0f0f0",
+							},
+							"&.Mui-focused:before": {
+								borderBottomColor: "#14213d",
+							},
+							"&:after": {
+								borderBottomColor: "#14213d",
+								backgroundColor: "#f0f0f0",
+							},
+						},
+						"& .MuiInputLabel-root": {
+							color: "#14213d",
+							"&.Mui-focused": {
+								color: "#14213d",
+							},
+						},
+					}}
 				>
-					<MenuItem value="Pendiente">Pendiente</MenuItem>
-					<MenuItem value="Completa">Completa</MenuItem>
-					<MenuItem value="Todas">Todas</MenuItem>
-				</Select>
-			</FormControl>
-			<Stack spacing={2} sx={{ width: "100%", alignItems: "center" }}>
+					<InputLabel id="filtro-select-label">Seleccione un filtro</InputLabel>
+					<Select
+						labelId="filtro-select-label"
+						id="filtro-select"
+						value={filtro}
+						onChange={handleFiltro}
+					>
+						<MenuItem value="Pendiente">Pendiente</MenuItem>
+						<MenuItem value="Completa">Completa</MenuItem>
+						<MenuItem value="Todas">Todas</MenuItem>
+					</Select>
+				</FormControl>
+			</Stack>
+			<Stack
+				alignItems="center"
+				bgcolor={"#f9cc83"}
+				border={"solid 2px #14213d"}
+				p={2}
+				borderRadius={2}
+				width={{ xs: "90%", sm: "60%" }}
+			>
 				{tareasFiltradas.map((tarea) => (
 					<Tarea
 						key={tarea.id}

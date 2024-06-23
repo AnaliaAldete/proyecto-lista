@@ -2,12 +2,14 @@ import {
 	Typography,
 	ButtonGroup,
 	Button,
+	IconButton,
 	Stack,
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
+	Divider,
 } from "@mui/material";
 import { useState } from "react";
 import { FaCheckCircle, FaEdit } from "react-icons/fa";
@@ -31,7 +33,10 @@ export const Tarea = ({
 	};
 
 	return (
-		<Stack spacing={2}>
+		<Stack
+			width={"100%"}
+			divider={<Divider orientation="horizontal" flexItem />}
+		>
 			{edit ? (
 				<Form
 					descripcion={descripcion}
@@ -41,26 +46,59 @@ export const Tarea = ({
 					setArrayTareas={setArrayTareas}
 				/>
 			) : (
-				<Stack direction="row">
+				<Stack direction="row" spacing={5} justifyContent={"space-between"}>
 					<Typography
 						variant="body1"
 						sx={{
-							backgroundColor: check ? "lightgreen" : "inherit",
+							color: check ? "#4caf50" : "inherit",
 							textDecoration: check ? "line-through" : "none",
+							fontWeight: "bold",
+							display: "flex",
+							alignItems: "center",
 						}}
 					>
 						{descripcion}
 					</Typography>
 					<ButtonGroup variant="text" aria-label="Basic button group">
-						<Button onClick={() => handleCheckTarea(id)}>
+						<IconButton
+							size="medium"
+							sx={{
+								color: check ? "#4caf50" : "#14213d",
+								"&:hover": {
+									backgroundColor: "#14213d",
+									color: "#fca311",
+								},
+							}}
+							onClick={() => handleCheckTarea(id)}
+						>
 							<FaCheckCircle />
-						</Button>
-						<Button onClick={() => setOpen(true)}>
+						</IconButton>
+						<IconButton
+							size="medium"
+							sx={{
+								color: "#14213d",
+								"&:hover": {
+									backgroundColor: "#14213d",
+									color: "#fca311",
+								},
+							}}
+							onClick={() => setOpen(true)}
+						>
 							<RiDeleteBin6Fill />
-						</Button>
-						<Button onClick={() => setEdit(true)}>
+						</IconButton>
+						<IconButton
+							size="medium"
+							sx={{
+								color: "#14213d",
+								"&:hover": {
+									backgroundColor: "#14213d",
+									color: "#fca311",
+								},
+							}}
+							onClick={() => setEdit(true)}
+						>
 							<FaEdit />
-						</Button>
+						</IconButton>
 					</ButtonGroup>
 				</Stack>
 			)}
@@ -79,10 +117,34 @@ export const Tarea = ({
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Button variant="outlined" onClick={() => setOpen(false)}>
+					<Button
+						variant="outlined"
+						sx={{
+							borderColor: "#14213d",
+							color: "#14213d",
+							"&:hover": {
+								borderColor: "#14213d",
+							},
+						}}
+						onClick={() => setOpen(false)}
+					>
 						Cancelar
 					</Button>
-					<Button variant="contained" onClick={handleEliminarTarea} autoFocus>
+					<Button
+						variant="contained"
+						sx={{
+							backgroundColor: "#14213d",
+							color: "white",
+							"&:hover": {
+								backgroundColor: "#fca311",
+								color: "#14213d",
+								border: "solid 1px #14213d",
+							},
+							fontWeight: "bold",
+						}}
+						onClick={handleEliminarTarea}
+						autoFocus
+					>
 						Eliminar
 					</Button>
 				</DialogActions>
