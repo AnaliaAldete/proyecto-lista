@@ -1,4 +1,4 @@
-import { Stack, TextField, Button } from "@mui/material";
+import { Stack, TextField, Button, useTheme } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 export const Form = ({
@@ -9,6 +9,7 @@ export const Form = ({
 	id,
 	setArrayTareas,
 }) => {
+	const theme = useTheme();
 	const {
 		register,
 		handleSubmit,
@@ -57,27 +58,8 @@ export const Form = ({
 					defaultValue={descripcion}
 					fullWidth
 					sx={{
-						"& .MuiFilledInput-root": {
-							backgroundColor: "#f0f0f0",
-							"&:hover": {
-								backgroundColor: "#f0f0f0",
-							},
-							"&.Mui-focused": {
-								backgroundColor: "#f0f0f0",
-							},
-							"&.Mui-focused:before": {
-								borderBottomColor: "#14213d",
-							},
-							"&:after": {
-								borderBottomColor: "#14213d",
-								backgroundColor: "#f0f0f0",
-							},
-						},
 						"& .MuiInputLabel-root": {
-							color: "#14213d",
-							"&.Mui-focused": {
-								color: "#14213d",
-							},
+							color: theme.palette.primary.main,
 						},
 					}}
 					{...register("descripcion", {
@@ -105,11 +87,6 @@ export const Form = ({
 							size="small"
 							sx={{
 								maxHeight: "56px",
-								borderColor: "#14213d",
-								color: "#14213d",
-								"&:hover": {
-									borderColor: "#14213d",
-								},
 								flex: 1,
 							}}
 							onClick={() => setEdit(false)}
@@ -123,15 +100,15 @@ export const Form = ({
 						size="small"
 						sx={{
 							maxHeight: "56px",
-							backgroundColor: "#14213d",
-							color: "#f9cc83",
+							flex: 1,
+							color: theme.palette.text.secondary,
+							fontWeight: "bold",
 							"&:hover": {
 								backgroundColor: "#fca311",
-								color: "#14213d",
-								border: "solid 1px #14213d",
+								color: theme.palette.text.primary,
+								border: "solid 2px",
+								borderColor: theme.palette.text.primary,
 							},
-							flex: 1,
-							fontWeight: "bold",
 						}}
 					>
 						{!edit ? "Agregar" : "Editar"}

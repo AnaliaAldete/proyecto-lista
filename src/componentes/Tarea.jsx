@@ -10,6 +10,7 @@ import {
 	DialogContentText,
 	DialogTitle,
 	Divider,
+	useTheme,
 } from "@mui/material";
 import { useState } from "react";
 import { FaCheckCircle, FaEdit } from "react-icons/fa";
@@ -20,15 +21,16 @@ export const Tarea = ({
 	descripcion,
 	id,
 	setArrayTareas,
-	eliminarTarea,
+	handleEliminarTarea,
 	check,
 	handleCheckTarea,
 }) => {
 	const [edit, setEdit] = useState(false);
 	const [open, setOpen] = useState(false);
+	const theme = useTheme();
 
-	const handleEliminarTarea = () => {
-		eliminarTarea(id);
+	const eliminarTarea = () => {
+		handleEliminarTarea(id);
 		setOpen(false);
 	};
 
@@ -50,7 +52,7 @@ export const Tarea = ({
 					<Typography
 						variant="body1"
 						sx={{
-							color: check ? "#4caf50" : "inherit",
+							color: check ? theme.palette.text.tertiary : "inherit",
 							textDecoration: check ? "line-through" : "none",
 							fontWeight: "bold",
 							display: "flex",
@@ -62,10 +64,13 @@ export const Tarea = ({
 					<ButtonGroup variant="text" aria-label="Basic button group">
 						<IconButton
 							size="medium"
+							aria-label="check tarea"
 							sx={{
-								color: check ? "#4caf50" : "#14213d",
+								color: check
+									? theme.palette.text.tertiary
+									: theme.palette.text.primary,
 								"&:hover": {
-									backgroundColor: "#14213d",
+									backgroundColor: theme.palette.primary.main,
 									color: "#fca311",
 								},
 							}}
@@ -75,10 +80,11 @@ export const Tarea = ({
 						</IconButton>
 						<IconButton
 							size="medium"
+							aria-label="borrar tarea"
 							sx={{
-								color: "#14213d",
+								color: theme.palette.text.primary,
 								"&:hover": {
-									backgroundColor: "#14213d",
+									backgroundColor: theme.palette.primary.main,
 									color: "#fca311",
 								},
 							}}
@@ -88,10 +94,11 @@ export const Tarea = ({
 						</IconButton>
 						<IconButton
 							size="medium"
+							aria-label="editar tarea"
 							sx={{
-								color: "#14213d",
+								color: theme.palette.text.primary,
 								"&:hover": {
-									backgroundColor: "#14213d",
+									backgroundColor: theme.palette.primary.main,
 									color: "#fca311",
 								},
 							}}
@@ -120,10 +127,10 @@ export const Tarea = ({
 					<Button
 						variant="outlined"
 						sx={{
-							borderColor: "#14213d",
-							color: "#14213d",
+							borderColor: theme.palette.primary.main,
+							color: theme.palette.primary.main,
 							"&:hover": {
-								borderColor: "#14213d",
+								borderColor: theme.palette.primary.main,
 							},
 						}}
 						onClick={() => setOpen(false)}
@@ -133,16 +140,15 @@ export const Tarea = ({
 					<Button
 						variant="contained"
 						sx={{
-							backgroundColor: "#14213d",
-							color: "white",
+							color: theme.palette.text.secondary,
 							"&:hover": {
 								backgroundColor: "#fca311",
-								color: "#14213d",
-								border: "solid 1px #14213d",
+								color: theme.palette.primary.main,
+								border: `solid 1px ${theme.palette.primary.main}`,
 							},
 							fontWeight: "bold",
 						}}
-						onClick={handleEliminarTarea}
+						onClick={eliminarTarea}
 						autoFocus
 					>
 						Eliminar

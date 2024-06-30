@@ -6,11 +6,16 @@ import {
 	MenuItem,
 	FormControl,
 	InputLabel,
+	IconButton,
+	ThemeProvider,
+	CssBaseline,
 } from "@mui/material";
 import { Tarea } from "./componentes/Tarea";
 import { Form } from "./componentes/Form";
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { lightTheme, darkTheme } from "./themes/theme";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
 
 function App() {
 	const [arrayTareas, setArrayTareas] = useState(
@@ -19,6 +24,7 @@ function App() {
 		]
 	);
 	const [filtro, setFiltro] = useState("Todas");
+	const [mode, setMode] = useState("light");
 
 	useEffect(() => {
 		localStorage.setItem("arrayTareas", JSON.stringify(arrayTareas));
@@ -34,13 +40,13 @@ function App() {
 	};
 
 	const handleCheckTarea = (id) => {
-		const nuevasTareas = arrayTareas.map((tarea) =>
+		const tareasCheck = arrayTareas.map((tarea) =>
 			tarea.id === id ? { ...tarea, check: !tarea.check } : tarea
 		);
-		setArrayTareas(nuevasTareas);
+		setArrayTareas(tareasCheck);
 	};
 
-	const eliminarTarea = (id) =>
+	const handleEliminarTarea = (id) =>
 		setArrayTareas(arrayTareas.filter((tarea) => tarea.id !== id));
 
 	const handleFiltro = (e) => {
@@ -54,102 +60,116 @@ function App() {
 		else return true;
 	});
 
+	const toggleColorMode = () => {
+		setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+	};
+
 	return (
-		<Stack
-			spacing={3}
-			alignItems={"center"}
-			p={3}
-			minHeight={"100vh"}
-			sx={{
-				backgroundImage: "url(/img/fondo1.png)",
-			}}
-		>
-			<Typography
-				variant="h3"
-				component="h1"
-				bgcolor={"#14213d"}
-				color={"#f9cc83"}
-				p={2}
-				borderRadius={2}
-			>
-				Master Tarea
-			</Typography>
+		<ThemeProvider theme={mode === "light" ? lightTheme : darkTheme}>
+			<CssBaseline />
+
 			<Stack
-				direction={{ xs: "column", md: "row" }}
-				spacing={2}
-				bgcolor={"#f9cc83"}
-				border={"solid 2px #14213d"}
-				p={2}
-				borderRadius={2}
-				width={{ xs: "90%", sm: "60%" }}
+				component="header"
+				direction="row"
+				width="100%"
+				bgcolor={mode === "light" ? "primary.main" : "background.paper"}
+				alignItems="center"
 				justifyContent={"space-between"}
+				padding={2}
+				height={"13vh"}
 			>
-				<Form
-					agregarTarea={handleArrayTareas}
-					setArrayTareas={setArrayTareas}
-				></Form>
-				<FormControl
-					variant="filled"
+				<Typography variant="h3" component="h1">
+					Master Tarea
+				</Typography>
+				<IconButton
+					onClick={toggleColorMode}
+					color="inherit"
 					sx={{
-						minWidth: "30%",
-						"& .MuiFilledInput-root": {
-							backgroundColor: "#f0f0f0",
-							"&:hover": {
-								backgroundColor: "#f0f0f0",
-							},
-							"&.Mui-focused": {
-								backgroundColor: "#f0f0f0",
-							},
-							"&.Mui-focused:before": {
-								borderBottomColor: "#14213d",
-							},
-							"&:after": {
-								borderBottomColor: "#14213d",
-								backgroundColor: "#f0f0f0",
-							},
-						},
-						"& .MuiInputLabel-root": {
-							color: "#14213d",
-							"&.Mui-focused": {
-								color: "#14213d",
-							},
+						color: "primary.main",
+						backgroundColor: "secondary.main",
+						"&:hover": {
+							color: "primary.main",
+							backgroundColor: "#fca311",
 						},
 					}}
 				>
-					<InputLabel id="filtro-select-label">Seleccione un filtro</InputLabel>
-					<Select
-						labelId="filtro-select-label"
-						id="filtro-select"
-						value={filtro}
-						onChange={handleFiltro}
-					>
-						<MenuItem value="Pendiente">Pendiente</MenuItem>
-						<MenuItem value="Completa">Completa</MenuItem>
-						<MenuItem value="Todas">Todas</MenuItem>
-					</Select>
-				</FormControl>
+					{mode === "light" ? <MdDarkMode /> : <MdLightMode />}
+				</IconButton>
 			</Stack>
 			<Stack
-				alignItems="center"
-				bgcolor={"#f9cc83"}
-				border={"solid 2px #14213d"}
-				p={2}
-				borderRadius={2}
-				width={{ xs: "90%", sm: "60%" }}
+				spacing={3}
+				padding={3}
+				alignItems={"center"}
+				minHeight={"87vh"}
+				component="main"
+				sx={{
+					backgroundImage:
+						mode === "light" ? "url(/img/fondo1.png)" : "url(/img/fondo2.png)",
+				}}
 			>
-				{tareasFiltradas.map((tarea) => (
-					<Tarea
-						key={tarea.id}
-						descripcion={tarea.descripcion}
-						id={tarea.id}
+				<Stack
+					direction={{ xs: "column", md: "row" }}
+					spacing={2}
+					bgcolor={"background.paper"}
+					border={2}
+					borderColor={"primary.main"}
+					p={2}
+					borderRadius={2}
+					width={{ xs: "90%", sm: "60%" }}
+					justifyContent={"space-between"}
+				>
+					<Form
+						agregarTarea={handleArrayTareas}
 						setArrayTareas={setArrayTareas}
-						check={tarea.check}
-						handleCheckTarea={handleCheckTarea}
-						eliminarTarea={eliminarTarea}
-					/>
-				))}
+					></Form>
+					<FormControl
+						variant="filled"
+						sx={{
+							minWidth: "30%",
+
+							"& .MuiInputLabel-root": {
+								color: "primary.main",
+							},
+						}}
+					>
+						<InputLabel id="filtro-select-label">
+							Seleccione un filtro
+						</InputLabel>
+						<Select
+							labelId="filtro-select-label"
+							id="filtro-select"
+							value={filtro}
+							onChange={handleFiltro}
+						>
+							<MenuItem value="Pendiente">Pendiente</MenuItem>
+							<MenuItem value="Completa">Completa</MenuItem>
+							<MenuItem value="Todas">Todas</MenuItem>
+						</Select>
+					</FormControl>
+				</Stack>
+				<Stack
+					alignItems="center"
+					bgcolor={"background.paper"}
+					border={2}
+					borderColor={"primary.main"}
+					p={2}
+					borderRadius={2}
+					width={{ xs: "90%", sm: "60%" }}
+				>
+					{tareasFiltradas.map((tarea) => (
+						<Tarea
+							key={tarea.id}
+							descripcion={tarea.descripcion}
+							id={tarea.id}
+							setArrayTareas={setArrayTareas}
+							check={tarea.check}
+							handleCheckTarea={handleCheckTarea}
+							handleEliminarTarea={handleEliminarTarea}
+						/>
+					))}
+				</Stack>
 			</Stack>
-		</Stack>
+		</ThemeProvider>
 	);
 }
 
