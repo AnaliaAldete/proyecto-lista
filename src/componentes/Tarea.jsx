@@ -119,7 +119,10 @@ export const Tarea = ({
 					{"Confirmar eliminación"}
 				</DialogTitle>
 				<DialogContent>
-					<DialogContentText id="alert-dialog-description">
+					<DialogContentText
+						id="alert-dialog-description"
+						color={theme.palette.primary.main}
+					>
 						¿Estás seguro de que quieres eliminar esta tarea?
 					</DialogContentText>
 				</DialogContent>
