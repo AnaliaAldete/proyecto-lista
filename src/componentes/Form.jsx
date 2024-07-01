@@ -69,8 +69,8 @@ export const Form = ({
 							message: "La tarea debe tener al menos 3 caracteres",
 						},
 						maxLength: {
-							value: 60,
-							message: "La tarea no puede tener más de 60 caracteres",
+							value: 35,
+							message: "La tarea no puede tener más de 35 caracteres",
 						},
 						pattern: {
 							value: /\S/,

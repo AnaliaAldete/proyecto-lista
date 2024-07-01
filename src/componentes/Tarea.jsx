@@ -37,7 +37,12 @@ export const Tarea = ({
 	return (
 		<Stack
 			width={"100%"}
+			spacing={{
+				xs: 1,
+				sm: 0,
+			}}
 			divider={<Divider orientation="horizontal" flexItem />}
+			sx={{ marginBlock: { xs: 1, sm: 0 } }}
 		>
 			{edit ? (
 				<Form
@@ -48,7 +53,12 @@ export const Tarea = ({
 					setArrayTareas={setArrayTareas}
 				/>
 			) : (
-				<Stack direction="row" spacing={5} justifyContent={"space-between"}>
+				<Stack
+					direction={{ xs: "column", md: "row" }}
+					spacing={{ xs: 1, md: 5 }}
+					justifyContent={"space-between"}
+					alignItems={"center"}
+				>
 					<Typography
 						variant="body1"
 						sx={{
@@ -57,6 +67,7 @@ export const Tarea = ({
 							fontWeight: "bold",
 							display: "flex",
 							alignItems: "center",
+							textAlign: { xs: "center", sm: "left" },
 						}}
 					>
 						{descripcion}

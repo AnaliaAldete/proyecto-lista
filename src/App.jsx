@@ -84,6 +84,7 @@ function App() {
 				<IconButton
 					onClick={toggleColorMode}
 					color="inherit"
+					aria-label="modo claro/oscuro"
 					sx={{
 						color: "primary.main",
 						backgroundColor: "secondary.main",
@@ -98,7 +99,7 @@ function App() {
 			</Stack>
 			<Stack
 				spacing={3}
-				padding={3}
+				padding={{ xs: 2, md: 3 }}
 				alignItems={"center"}
 				minHeight={"87vh"}
 				component="main"
@@ -115,7 +116,7 @@ function App() {
 					borderColor={"primary.main"}
 					p={2}
 					borderRadius={2}
-					width={{ xs: "90%", sm: "60%" }}
+					width={{ xs: "100%", sm: "60%" }}
 					justifyContent={"space-between"}
 				>
 					<Form
@@ -154,7 +155,7 @@ function App() {
 					borderColor={"primary.main"}
 					p={2}
 					borderRadius={2}
-					width={{ xs: "90%", sm: "60%" }}
+					width={{ xs: "100%", sm: "60%" }}
 				>
 					{tareasFiltradas.map((tarea) => (
 						<Tarea
